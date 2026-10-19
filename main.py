@@ -178,7 +178,7 @@ def view_leave_balance():
 
     leaves = load_leaves()
 
-    total_leave = 20
+    total_leave = 30
 
     used_leave = sum(
         leave["leave_days"]
