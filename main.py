@@ -149,6 +149,7 @@ def reject_leave():
 
 
 def main():
+    print("Welcome to Employee Leave Management System!")
     while True:
         print("\n===== Employee Leave Management System =====")
         print("1. Apply for Leave")
