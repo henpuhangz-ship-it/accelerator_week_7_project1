@@ -147,6 +147,29 @@ def reject_leave():
     print("\nLeave request rejected successfully!")
 
 
+def view_leave_balance():
+    employee_id = input("Enter Employee ID: ")
+
+    leaves = load_leaves()
+
+    total_leave = 20
+
+    used_leave = sum(
+        leave["leave_days"]
+        for leave in leaves
+        if leave["employee_id"] == employee_id
+        and leave["status"] in ["Approved", "Leave Can Be Processed"]
+    )
+
+    remaining_leave = total_leave - used_leave
+
+    print("\n--- Employee Leave Balance ---")
+    print("Employee ID:", employee_id)
+    print("Total Leave:", total_leave)
+    print("Used Leave:", used_leave)
+    print("Remaining Leave:", remaining_leave)
+
+
 
 def main():
     while True:
@@ -155,7 +178,8 @@ def main():
         print("2. View Leave Applications")
         print("3. Manager Approval")
         print("4. Reject Leave Request")
-        print("5. Exit")
+        print("5. View Leave Balance")
+        print("6. Exit")
 
         choice = input("\nEnter your choice: ")
 
@@ -172,6 +196,9 @@ def main():
             reject_leave()
 
         elif choice == "5":
+            view_leave_balance()
+
+        elif choice == "6":
             print("Exiting application...")
             break
 
