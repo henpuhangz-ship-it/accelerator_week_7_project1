@@ -20,9 +20,29 @@ def save_leaves(leaves):
         json.dump(leaves, file, indent=4)
 
 
+
 def apply_leave():
     employee_id = input("Enter Employee ID: ")
     employee_name = input("Enter Employee Name: ")
+
+    print("\nLeave Types:")
+    print("1. Casual Leave")
+    print("2. Sick Leave")
+    print("3. Earned Leave")
+
+    leave_type_choice = input("Select leave type: ")
+
+    leave_types = {
+        "1": "Casual Leave",
+        "2": "Sick Leave",
+        "3": "Earned Leave"
+    }
+
+    if leave_type_choice not in leave_types:
+        print("Invalid leave type.")
+        return
+
+    leave_type = leave_types[leave_type_choice]
 
     try:
         leave_days = int(input("Enter number of leave days: "))
@@ -34,43 +54,30 @@ def apply_leave():
         print("Leave days must be greater than zero.")
         return
 
+    reason = input("Enter reason for leave: ")
+
     if leave_days > 5:
-        status = "Awaiting Manager Approval"
+        status = "Manager Approval Required"
     else:
-        status = "Pending"
+        status = "Leave Can Be Processed"
 
     leaves = load_leaves()
 
     leave_request = {
         "employee_id": employee_id,
         "employee_name": employee_name,
+        "leave_type": leave_type,
         "leave_days": leave_days,
+        "reason": reason,
         "status": status
     }
 
     leaves.append(leave_request)
     save_leaves(leaves)
 
-    print("\nLeave application submitted!")
+    print("\nLeave application submitted successfully!")
     print("Status:", status)
 
-
-def view_leaves():
-    leaves = load_leaves()
-
-    if not leaves:
-        print("\nNo leave applications found.")
-        return
-
-    print("\n--- Employee Leave Records ---")
-
-    for i, leave in enumerate(leaves):
-        print("----------------------------")
-        print("Request Number:", i + 1)
-        print("Employee ID:", leave["employee_id"])
-        print("Employee Name:", leave["employee_name"])
-        print("Leave Days:", leave["leave_days"])
-        print("Status:", leave["status"])
 
 
 def approve_leave():
@@ -108,6 +115,25 @@ def approve_leave():
     save_leaves(leaves)
 
     print("\nLeave request approved successfully!")
+
+
+def view_leaves():
+    leaves = load_leaves()
+
+    if not leaves:
+        print("\nNo leave applications found.")
+        return
+
+    print("\n--- Employee Leave Records ---")
+
+    for leave in leaves:
+        print("----------------------------")
+        print("Employee ID:", leave["employee_id"])
+        print("Employee Name:", leave["employee_name"])
+        print("Leave Type:", leave.get("leave_type", "Not specified"))
+        print("Leave Days:", leave["leave_days"])
+        print("Reason:", leave.get("reason", "Not specified"))
+        print("Status:", leave["status"])
 
 
 def reject_leave():
