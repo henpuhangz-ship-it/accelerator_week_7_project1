@@ -172,7 +172,7 @@ def reject_leave():
 
     print("\nLeave request rejected successfully!")
 
-
+# Calculates total, used, and remaining leave for an employee.
 def view_leave_balance():
     employee_id = input("Enter Employee ID: ")
 
