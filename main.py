@@ -110,13 +110,52 @@ def approve_leave():
     print("\nLeave request approved successfully!")
 
 
+def reject_leave():
+    leaves = load_leaves()
+
+    pending_requests = [
+        (i, leave)
+        for i, leave in enumerate(leaves)
+        if leave["status"] in ["Pending", "Awaiting Manager Approval"]
+    ]
+
+    if not pending_requests:
+        print("\nNo pending leave requests to reject.")
+        return
+
+    print("\n--- Reject Leave Requests ---")
+
+    for i, leave in pending_requests:
+        print(
+            f"{i + 1}. {leave['employee_name']} - "
+            f"{leave['leave_days']} days - {leave['status']}"
+        )
+
+    try:
+        choice = int(input("\nEnter request number to reject: ")) - 1
+    except ValueError:
+        print("Invalid input.")
+        return
+
+    if choice not in [i for i, leave in pending_requests]:
+        print("Invalid request number.")
+        return
+
+    leaves[choice]["status"] = "Rejected"
+    save_leaves(leaves)
+
+    print("\nLeave request rejected successfully!")
+
+
+
 def main():
     while True:
         print("\n===== Employee Leave Management System =====")
         print("1. Apply for Leave")
         print("2. View Leave Applications")
         print("3. Manager Approval")
-        print("4. Exit")
+        print("4. Reject Leave Request")
+        print("5. Exit")
 
         choice = input("\nEnter your choice: ")
 
@@ -130,6 +169,9 @@ def main():
             approve_leave()
 
         elif choice == "4":
+            reject_leave()
+
+        elif choice == "5":
             print("Exiting application...")
             break
 
