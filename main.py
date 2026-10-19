@@ -86,7 +86,7 @@ def approve_leave():
     pending_requests = [
         (i, leave)
         for i, leave in enumerate(leaves)
-        if leave["status"] == "Awaiting Manager Approval"
+        if leave["status"] == "Manager Approval required"
     ]
 
     if not pending_requests:
