@@ -198,6 +198,7 @@ def view_leave_balance():
 
 
 def main():
+    print("Welcome to Employee Leave Management System!")
     while True:
         print("\n===== Employee Leave Management System =====")
         print("1. Apply for Leave")
