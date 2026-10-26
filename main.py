@@ -86,7 +86,7 @@ def approve_leave():
     pending_requests = [
         (i, leave)
         for i, leave in enumerate(leaves)
-        if leave["status"] == "Manager Approval required"
+        if leave["status"] == "Manager Approval Required"
     ]
 
     if not pending_requests:
@@ -142,7 +142,7 @@ def reject_leave():
     pending_requests = [
         (i, leave)
         for i, leave in enumerate(leaves)
-        if leave["status"] in ["Pending", "Awaiting Manager Approval"]
+        if leave["status"] in ["Pending", "Awaiting Manager Approval", "Manager Approval Required"]
     ]
 
     if not pending_requests:
